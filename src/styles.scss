@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+html,body{
+  padding: 0;
+  margin: 0;
+}
+.form-field{
+  width: 400px;
+  max-width: 100%;
+  margin-bottom: 20px;
+  .field-error{
+    color:tomato;
+  }
+  input{
+    width: 100%;
+  }
+}
+.login-button{
+  margin-top: 10px;
+  text-align: center;
+  button{
+    min-width: 50%;
+  }
+}

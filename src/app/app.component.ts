@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-rehber';
+  // title = 'angular-rehber'; eski hali
+  title = "Angular Rehber"
 }

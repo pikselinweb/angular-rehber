@@ -1,0 +1,18 @@
+.form-field{
+  width: 400px;
+  max-width: 100%;
+  margin-bottom: 20px;
+  .field-error{
+    color:tomato;
+  }
+  input{
+    width: 100%;
+  }
+}
+.login-button{
+  margin-top: 10px;
+  text-align: center;
+  button{
+    min-width: 50%;
+  }
+}

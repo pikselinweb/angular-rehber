@@ -1,23 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+@import './styles/material.scss';
+@import './styles/forms.scss';
+
+
+
 html,body{
   padding: 0;
   margin: 0;
+  height: 100%;
 }
-.form-field{
-  width: 400px;
-  max-width: 100%;
-  margin-bottom: 20px;
-  .field-error{
-    color:tomato;
-  }
-  input{
-    width: 100%;
-  }
-}
-.login-button{
-  margin-top: 10px;
-  text-align: center;
-  button{
-    min-width: 50%;
-  }
-}
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+

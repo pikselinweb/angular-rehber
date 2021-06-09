@@ -1,13 +1,15 @@
 @use '~@angular/material' as mat;
 @include mat.core();
-$angular-rehber-primary: mat.define-palette(mat.$indigo-palette);
-$angular-rehber-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$angular-rehber-warn: mat.define-palette(mat.$red-palette);
-$angular-rehber-theme: mat.define-light-theme((
-  color: (
-    primary: $angular-rehber-primary,
-    accent: $angular-rehber-accent,
-    warn: $angular-rehber-warn,
+$angular-rehber-primary: mat.define-palette(mat.$cyan-palette);
+$angular-rehber-accent: mat.define-palette(mat.$amber-palette, 500);
+$angular-rehber-warn: mat.define-palette(mat.$red-palette, A200);
+$angular-rehber-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $angular-rehber-primary,
+      accent: $angular-rehber-accent,
+      warn: $angular-rehber-warn,
+    ),
   )
-));
+);
 @include mat.all-component-themes($angular-rehber-theme);

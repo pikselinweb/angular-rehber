@@ -1,5 +1,19 @@
 <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-  <div class="form-field">
+  <mat-form-field appearance="outline"  class="form-field">
+    <mat-label>Kullanıcı Adı</mat-label>
+    <input formControlName="username" matInput placeholder="Kullanıcı Adı">
+    <mat-error *ngIf="fieldHasError('username')">
+      {{ getErrorMessage("username") }}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline"  class="form-field">
+    <mat-label>Şifre</mat-label>
+    <input formControlName="password" matInput placeholder="Şifre">
+    <mat-error *ngIf="fieldHasError('password')">
+      {{ getErrorMessage("password") }}
+    </mat-error>
+  </mat-form-field>
+  <!-- <div class="form-field">
     <input type="text" formControlName="username" placeholder="Kullanıcı Adı" />
     <span class="field-error" *ngIf="fieldHasError('username')">
       {{ getErrorMessage("username") }}
@@ -10,11 +24,11 @@
     <span class="field-error" *ngIf="fieldHasError('password')">
       {{ getErrorMessage("password") }}
     </span>
-  </div>
+  </div> -->
   <div class="navigation-link">
     <a [routerLink]="['/auth/register']">Üye Ol</a>
   </div>
   <div class="login-button">
-    <button type="submit" [disabled]="!loginForm.valid">Giriş</button>
+    <button mat-raised-button color="primary" [disabled]="!loginForm.valid">Giriş</button>
   </div>
 </form>

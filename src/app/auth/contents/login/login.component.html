@@ -12,8 +12,19 @@
       formControlName="password"
       matInput
       placeholder="Şifre"
-      type="password"
+      [type]="showPassword ? 'text' : 'password'"
     />
+    <!-- ŞİFRE GİZLEME GÖSTERME BUTONU -->
+    <button
+      color="accent"
+      matSuffix
+      mat-icon-button
+      [attr.aria-label]="showPassword ? 'Gizle' : 'Göster'"
+      (click)="showPassword = !showPassword"
+    >
+      <mat-icon>{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
+    </button>
+     <!-- ŞİFRE GİZLEME GÖSTERME BUTONU -->
     <mat-error *ngIf="fieldHasError('password')">
       {{ getErrorMessage("password") }}
     </mat-error>

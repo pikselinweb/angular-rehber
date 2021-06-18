@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  // Şifre Gösterme - Gizleme
+  showPassword:boolean=false;
   // LOGIN FORMUNU DOĞRULAMALARIYLA BERABER OLUŞTURDUK
   loginForm: FormGroup = this.formBuilder.group({
     username: [

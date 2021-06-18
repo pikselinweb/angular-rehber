@@ -6,8 +6,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+
 import { AuthRoutingModule } from './auth-routing.module';
+
 // LAYOUT BİLEŞENİ
 import { AuthComponent } from './auth.component';
 // KAYIT VE GİRİŞ BİLEŞENLERİ
@@ -26,6 +29,7 @@ import { LoginComponent } from './contents/login/login.component';
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
   ],
 })

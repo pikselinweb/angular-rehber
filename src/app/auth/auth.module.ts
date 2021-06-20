@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // PAYLAŞILAN MODUL
 import { SharedModule } from '../shared/shared.module';
+
 import { AuthRoutingModule } from './auth-routing.module';
 // LAYOUT BİLEŞENİ
 import { AuthComponent } from './auth.component';

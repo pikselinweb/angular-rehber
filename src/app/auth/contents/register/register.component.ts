@@ -1,49 +1,58 @@
 import { Component, OnInit } from '@angular/core';
 // ANGULAR FORM ÖZELLİKLERİ
-import { FormControl, Validators, FormGroup, AbstractControl ,ValidatorFn} from '@angular/forms';
+import {
+  FormControl,
+  Validators,
+  FormGroup,
+  AbstractControl,
+  ValidatorFn,
+} from '@angular/forms';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  //şifre gizleme gösterme
+  showPassword: boolean = false;
   registerForm: FormGroup;
   constructor() {
     // OLUŞTURULURKEN FORMU TANIMLADIK
-    this.registerForm = this.initRegisterForm
-   }
-
-  ngOnInit(): void {
-
+    this.registerForm = this.initRegisterForm;
   }
-  get initRegisterForm(){
-   return new FormGroup({
-      username: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(30),
-      ]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(16),
-        Validators.pattern(
-          '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
-        ),
-      ]),
-      passwordConfirm: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(16),
 
-        Validators.pattern(
-          '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
-        ),
-        this.passwordMatchValidator()
-      ]),
-    }, {updateOn:'blur'});
+  ngOnInit(): void {}
+  get initRegisterForm() {
+    return new FormGroup(
+      {
+        username: new FormControl('', [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(30),
+        ]),
+        password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(16),
+          Validators.pattern(
+            '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
+          ),
+        ]),
+        passwordConfirm: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(16),
+
+          Validators.pattern(
+            '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
+          ),
+          this.passwordMatchValidator(),
+        ]),
+      },
+      { updateOn: 'blur' }
+    );
   }
-   // FORM ALANININ HATALI OLUP OLMADIĞINI KONTROL ETMEK İÇİN
+  // FORM ALANININ HATALI OLUP OLMADIĞINI KONTROL ETMEK İÇİN
   fieldHasError(fieldName: string): boolean {
     const formField = this.registerForm.controls[fieldName];
     return formField?.invalid && formField?.touched ? true : false;
@@ -73,12 +82,8 @@ export class RegisterComponent implements OnInit {
     }
   }
   passwordMatchValidator(): ValidatorFn {
-    const passwordVal = this.registerForm?.get('password')?.value
+    const passwordVal = this.registerForm?.get('password')?.value;
     return (control: AbstractControl): { [key: string]: any } | null =>
-        control.value === passwordVal
-            ? null : {mismatch: true};
+      control.value === passwordVal ? null : { mismatch: true };
   }
-
 }
-
-

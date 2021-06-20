@@ -1,26 +1,53 @@
 <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
-  <div class="form-field">
-    <input type="text" formControlName="username" placeholder="Kullanıcı Adı" />
-    <span class="field-error" *ngIf="fieldHasError('username')">
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Kullanıcı Adı</mat-label>
+    <input formControlName="username" matInput placeholder="Kullanıcı Adı" />
+    <mat-error *ngIf="fieldHasError('username')">
       {{ getErrorMessage("username") }}
-    </span>
-  </div>
-  <div class="form-field">
-    <input type="password" formControlName="password" placeholder="Şifre" />
-    <span class="field-error" *ngIf="fieldHasError('password')">
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Şifre</mat-label>
+    <input
+      formControlName="password"
+      matInput
+      placeholder="Şifre"
+      [type]="showPassword ? 'text' : 'password'"
+    />
+    <!-- ŞİFRE GİZLEME GÖSTERME BUTONU -->
+    <button
+      color="accent"
+      matSuffix
+      mat-icon-button
+      [attr.aria-label]="showPassword ? 'Gizle' : 'Göster'"
+      (click)="showPassword = !showPassword"
+    >
+      <mat-icon>{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
+    </button>
+     <!-- ŞİFRE GİZLEME GÖSTERME BUTONU -->
+    <mat-error *ngIf="fieldHasError('password')">
       {{ getErrorMessage("password") }}
-    </span>
-  </div>
-  <div class="form-field">
-    <input type="password" formControlName="passwordConfirm" placeholder="Şifre Tekrar" />
-    <span class="field-error" *ngIf="fieldHasError('passwordConfirm')">
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Şifre Tekrar</mat-label>
+    <input
+      formControlName="passwordConfirm"
+      matInput
+      placeholder="Şifre Tekrar"
+      [type]="showPassword ? 'text' : 'password'"
+    />
+    <mat-error *ngIf="fieldHasError('passwordConfirm')">
       {{ getErrorMessage("passwordConfirm") }}
-    </span>
-  </div>
+    </mat-error>
+  </mat-form-field>
   <div class="navigation-link">
     <a [routerLink]="['/auth/login']">Giriş Yap</a>
   </div>
-  <div class="login-button">
-    <button type="submit" [disabled]="!registerForm.valid">Kayıt Ol</button>
+
+  <div class="auth-button">
+    <button mat-raised-button color="primary" [disabled]="!registerForm.valid">
+      Kayıt Ol
+    </button>
   </div>
 </form>

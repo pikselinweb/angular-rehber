@@ -7,6 +7,7 @@ import {
   AbstractControl,
   ValidatorFn,
 } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -16,7 +17,7 @@ export class RegisterComponent implements OnInit {
   //şifre gizleme gösterme
   showPassword: boolean = false;
   registerForm: FormGroup;
-  constructor() {
+  constructor(private authService:AuthService) {
     // OLUŞTURULURKEN FORMU TANIMLADIK
     this.registerForm = this.initRegisterForm;
   }
@@ -46,10 +47,10 @@ export class RegisterComponent implements OnInit {
           Validators.pattern(
             '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
           ),
-          this.passwordMatchValidator(),
+          // this.passwordMatchValidator(),
         ]),
       },
-      { updateOn: 'blur' }
+      { updateOn:'blur' }
     );
   }
   // FORM ALANININ HATALI OLUP OLMADIĞINI KONTROL ETMEK İÇİN
@@ -78,11 +79,14 @@ export class RegisterComponent implements OnInit {
   // FORMU SUBMIT ETMEK İÇİN
   onRegisterSubmit() {
     if (this.registerForm.valid) {
+      this.authService.register(this.registerForm.value)
       console.log(this.registerForm.value);
     }
   }
   passwordMatchValidator(): ValidatorFn {
+    console.log(this.registerForm)
     const passwordVal = this.registerForm?.get('password')?.value;
+    console.log({passwordVal})
     return (control: AbstractControl): { [key: string]: any } | null =>
       control.value === passwordVal ? null : { mismatch: true };
   }

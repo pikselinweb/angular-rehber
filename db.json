@@ -1,5 +1,11 @@
 {
   "users": [
-
+    {
+      "email": "nazkefir@mail.com",
+      "password": "$2a$10$YDXYCIy5Nao2j7FJDqR6xumyDZC7iFw1ag9ebJkC.MDm0dymizoEO",
+      "fullName": "Nazlı Kefirci",
+      "bio": "Ne içindeyim zamanın ne de büsbütün dışında...",
+      "id": 1
+    }
   ]
 }

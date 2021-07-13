@@ -6,6 +6,7 @@ import {
   FormGroup,
   AbstractControl,
   ValidatorFn,
+  ValidationErrors,
 } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
@@ -17,7 +18,8 @@ export class RegisterComponent implements OnInit {
   //şifre gizleme gösterme
   showPassword: boolean = false;
   registerForm: FormGroup;
-  constructor(private authService:AuthService) {
+
+  constructor(private authService: AuthService) {
     // OLUŞTURULURKEN FORMU TANIMLADIK
     this.registerForm = this.initRegisterForm;
   }
@@ -26,8 +28,14 @@ export class RegisterComponent implements OnInit {
   get initRegisterForm() {
     return new FormGroup(
       {
-        username: new FormControl('', [
+        fullName: new FormControl('', [
           Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(60),
+        ]),
+        email: new FormControl('', [
+          Validators.required,
+          Validators.email,
           Validators.minLength(5),
           Validators.maxLength(30),
         ]),
@@ -47,10 +55,13 @@ export class RegisterComponent implements OnInit {
           Validators.pattern(
             '(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
           ),
-          // this.passwordMatchValidator(),
+
+          this.passwordMatchValidator(),
         ]),
+
+        bio: new FormControl('', [Validators.maxLength(200)]),
       },
-      { updateOn:'blur' }
+      { updateOn: 'blur' }
     );
   }
   // FORM ALANININ HATALI OLUP OLMADIĞINI KONTROL ETMEK İÇİN
@@ -64,6 +75,8 @@ export class RegisterComponent implements OnInit {
     const fieldErrors = this.registerForm.controls[fieldName].errors;
     return formField?.hasError('required')
       ? 'Alan boş bırakılamaz'
+      : formField?.hasError('email')
+      ? 'Lütfen geçerli bir mail adresi giriniz.'
       : formField?.hasError('minlength')
       ? `Belirlenen karakter sınırının altındasınız
       (${fieldErrors?.minlength?.actualLength} / ${fieldErrors?.minlength?.requiredLength})`
@@ -77,17 +90,16 @@ export class RegisterComponent implements OnInit {
       : 'Bilinmeyen hata';
   }
   // FORMU SUBMIT ETMEK İÇİN
-  onRegisterSubmit() {
+   onRegisterSubmit() {
     if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value)
-      console.log(this.registerForm.value);
+     this.authService.register(this.registerForm.value);
     }
   }
   passwordMatchValidator(): ValidatorFn {
-    console.log(this.registerForm)
-    const passwordVal = this.registerForm?.get('password')?.value;
-    console.log({passwordVal})
-    return (control: AbstractControl): { [key: string]: any } | null =>
-      control.value === passwordVal ? null : { mismatch: true };
+    return (control: AbstractControl): ValidationErrors | null => {
+      const passwordVal = this.registerForm?.get('password')?.value;
+      const forbidden = control.value !== passwordVal;
+      return forbidden ? { mismatch: true } : null;
+    };
   }
 }

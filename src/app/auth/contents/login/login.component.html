@@ -1,9 +1,9 @@
 <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
   <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Kullanıcı Adı</mat-label>
-    <input formControlName="username" matInput placeholder="Kullanıcı Adı" />
-    <mat-error *ngIf="fieldHasError('username')">
-      {{ getErrorMessage("username") }}
+    <mat-label>Mail Adresi</mat-label>
+    <input formControlName="email" matInput placeholder="Mail Adresi" />
+    <mat-error *ngIf="fieldHasError('email')">
+      {{ getErrorMessage("email") }}
     </mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline" class="form-field">
@@ -21,6 +21,7 @@
       mat-icon-button
       [attr.aria-label]="showPassword ? 'Gizle' : 'Göster'"
       (click)="showPassword = !showPassword"
+      type="button"
     >
       <mat-icon>{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
     </button>

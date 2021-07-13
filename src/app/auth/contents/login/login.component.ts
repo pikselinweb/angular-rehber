@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -7,13 +8,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   // Şifre Gösterme - Gizleme
-  showPassword:boolean=false;
+  showPassword: boolean = false;
   // LOGIN FORMUNU DOĞRULAMALARIYLA BERABER OLUŞTURDUK
   loginForm: FormGroup = this.formBuilder.group({
-    username: [
+    email: [
       '',
       Validators.compose([
         Validators.required,
+        Validators.email,
         Validators.minLength(5),
         Validators.maxLength(30),
       ]),
@@ -31,7 +33,7 @@ export class LoginComponent implements OnInit {
     ],
   });
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private authService:AuthService) {}
 
   ngOnInit(): void {}
   // FORM ALANININ HATALI OLUP OLMADIĞINI KONTROL ETMEK İÇİN
@@ -45,6 +47,8 @@ export class LoginComponent implements OnInit {
     const fieldErrors = this.loginForm.controls[fieldName].errors;
     return formField?.hasError('required')
       ? 'Alan boş bırakılamaz'
+      : formField?.hasError('email')
+      ? 'Lütfen geçerli bir mail adresi giriniz.'
       : formField?.hasError('minlength')
       ? `Belirlenen karakter sınırının altındasınız
       (${fieldErrors?.minlength?.actualLength} / ${fieldErrors?.minlength?.requiredLength})`
@@ -58,7 +62,7 @@ export class LoginComponent implements OnInit {
   // FORMU SUBMIT ETMEK İÇİN
   onLoginSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      this.authService.login(this.loginForm.value)
     }
   }
 }

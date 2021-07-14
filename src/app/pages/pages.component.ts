@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-// Çerez Servisi
-import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '@core/services';
+
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
-  styleUrls: ['./pages.component.scss']
+  styleUrls: ['./pages.component.scss'],
 })
 export class PagesComponent implements OnInit {
-  // Çerez Servisi inject
-  constructor(private cookieService: CookieService) { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    // Örnek Kullanım
-    this.cookieService.set( 'test', 'Merhaba ben test çerezim.' );
-    console.log(this.cookieService.get('test'))
+    this.authService
+      .userProfile()
+      .then((val) => console.table(val));
   }
-
 }

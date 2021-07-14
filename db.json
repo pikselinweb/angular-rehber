@@ -6,6 +6,13 @@
       "fullName": "Nazlı Kefirci",
       "bio": "Ne içindeyim zamanın ne de büsbütün dışında...",
       "id": 1
+    },
+    {
+      "email": "kk@mail.com",
+      "password": "$2a$10$zpMmCLyuypnFRLQruHlS0e59PFpaIFkoCJhGYR.E79jpeQhFTaHRi",
+      "fullName": "Kamil Gözüaçık",
+      "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent bibendum ultricies porttitor. Nullam tempus, sapien ac porttitor dignissim, justo arcu tincidunt ex, a bibendum quam nisi sed metus. ",
+      "id": 2
     }
   ]
 }

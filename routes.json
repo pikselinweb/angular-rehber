@@ -1,0 +1,3 @@
+{
+  "/users/:email": "/posts?email=:email"
+}

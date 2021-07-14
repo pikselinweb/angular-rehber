@@ -7,19 +7,20 @@ import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 // kayıt formunun interface'i
 import { LOGIN_FORM, REGISTER_FORM } from 'src/app/models/auth/forms';
-
-
+// Ortam değişkenleri
+import { environment } from '@environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   // sahte sunucu url
-  private readonly authBaseUrl = 'http://localhost:3000';
+  private readonly authBaseUrl = environment.apiUrl;
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
     private router: Router
-  ) {}
+  ) {
+  }
   // asenkron kayıt fonksiyonu
   async register(data: REGISTER_FORM) {
     delete data.passwordConfirm;
@@ -27,7 +28,7 @@ export class AuthService {
       .post(`${this.authBaseUrl}/register`, data)
       .toPromise();
     if (result?.accessToken) {
-      this.cookieService.set('authToken', result?.accessToken,{path:'/'});
+      this.cookieService.set('authToken', result?.accessToken, { path: '/' });
       this.router.navigate(['']);
     }
     return result;
@@ -38,7 +39,7 @@ export class AuthService {
       .post(`${this.authBaseUrl}/login`, data)
       .toPromise();
     if (result?.accessToken) {
-      this.cookieService.set('authToken', result?.accessToken,{path:'/'});
+      this.cookieService.set('authToken', result?.accessToken, { path: '/' });
       this.router.navigate(['']);
     }
     return result;

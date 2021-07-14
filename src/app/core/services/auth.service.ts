@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 // Yönlendirme yapabilmek için router
 import { Router } from '@angular/router';
 // http istekleri için
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient,  HttpParams } from '@angular/common/http';
 // anahtarı çerezlere kaydetmek için
 import { CookieService } from 'ngx-cookie-service';
 // Auth Interfaces
@@ -44,11 +44,9 @@ export class AuthService {
   // email parametresi ile kullanıcı bilgilerini almak
   async userProfile(): Promise<USER> {
     const userMail = this.cookieService.get('userMail');
-    const authToken = this.cookieService.get('authToken');
     const httpParams = new HttpParams().append('email', userMail);
-    const httpHeaders = new HttpHeaders().append('Authorization',`Bearer ${authToken}`);
     const result: USER[] = await this.http
-      .get<USER[]>(`${this.authBaseUrl}/users`, {headers:httpHeaders, params: httpParams })
+      .get<USER[]>(`${this.authBaseUrl}/users`, { params: httpParams })
       .toPromise();
     const userInfo = result[0];
     delete userInfo.password;

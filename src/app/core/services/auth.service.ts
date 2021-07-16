@@ -1,56 +1,57 @@
 import { Injectable } from '@angular/core';
 // Yönlendirme yapabilmek için router
 import { Router } from '@angular/router';
-// http istekleri için
-import { HttpClient,  HttpParams } from '@angular/common/http';
 // anahtarı çerezlere kaydetmek için
 import { CookieService } from 'ngx-cookie-service';
+// Api Servisi
+import { ApiService } from './api.service';
 // Auth Interfaces
 import { LOGIN_FORM, REGISTER_FORM, USER } from '@models/auth';
-// Ortam değişkenleri
-import { environment } from '@environments/environment';
+// http req interface
+import { HTTP_REQ } from '@models/common';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  // sahte sunucu url
-  private readonly authBaseUrl = environment.apiUrl;
   constructor(
-    private http: HttpClient,
     private cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService
   ) {}
   // asenkron kayıt fonksiyonu
-  async register(data: REGISTER_FORM) {
-    delete data.passwordConfirm;
-    const result: any = await this.http
-      .post(`${this.authBaseUrl}/register`, data)
-      .toPromise();
-    if (result?.accessToken) {
-      this.setCookiesAndNavigate(result?.accessToken, data?.email)
+  async register(formData: REGISTER_FORM) {
+    delete formData.passwordConfirm;
+    const httpData: HTTP_REQ = { url: 'register', body: formData };
+    const { success, data, error } = await this.apiService.post(httpData);
+    if (success && data?.accessToken) {
+      this.setCookiesAndNavigate(data?.accessToken, formData?.email);
+    } else {
+      console.log(error?.message || 'Kayıt olurken bir sorun oluştu.');
     }
-    return result;
   }
   // asenkron giriş fonksiyonu
-  async login(data: LOGIN_FORM) {
-    const result: any = await this.http
-      .post(`${this.authBaseUrl}/login`, data)
-      .toPromise();
-    if (result?.accessToken) {
-      this.setCookiesAndNavigate(result?.accessToken, data?.email)
+  async login(formData: LOGIN_FORM) {
+    const httpData: HTTP_REQ = { url: 'login', body: formData };
+    const { success, data, error } = await this.apiService.post(httpData);
+    if (success && data?.accessToken) {
+      this.setCookiesAndNavigate(data?.accessToken, formData?.email);
+    } else {
+      console.log(error?.message || 'Giriş yaparken bir sorun oluştu.');
     }
-    return result;
   }
   // email parametresi ile kullanıcı bilgilerini almak
-  async userProfile(): Promise<USER> {
+  async userProfile(): Promise<USER | null> {
     const userMail = this.cookieService.get('userMail');
-    const httpParams = new HttpParams().append('email', userMail);
-    const result: USER[] = await this.http
-      .get<USER[]>(`${this.authBaseUrl}/users`, { params: httpParams })
-      .toPromise();
-    const userInfo = result[0];
-    delete userInfo.password;
-    return userInfo;
+    const httpData: HTTP_REQ = { url: 'users', params: { email: userMail } };
+    const { success, error, data } = await this.apiService.get(httpData);
+    if (success && data?.length > 0) {
+      const userInfo: USER = data[0];
+      delete userInfo.password;
+      return userInfo;
+    } else {
+      console.log(error?.message || 'Kullanıcı bilgileri alınamadı.');
+      return null;
+    }
   }
   private setCookiesAndNavigate(oAuthToken: string, email: string) {
     // Token süresi 1 saat olduğundan dolayı

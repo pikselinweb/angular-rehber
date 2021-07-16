@@ -18,14 +18,12 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error.error instanceof ErrorEvent) {
           //  frontend taraflı hata
           errorMessage = `Error: ${error.error.message}`;
-          console.log('frontend taraflı hata', errorMessage);
         } else {
           // backend taraflı hata
-          errorMessage = `Error Code: ${error.status},  Message: ${error.message}`;
-          console.log('backend taraflı hata', errorMessage);
+          errorMessage = error.error || error.message;
         }
 
-        return throwError(errorMessage);
+        return throwError({ status: error.status, message: errorMessage });
       })
     );
   }

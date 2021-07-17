@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 // Çerez Servisi
 import { CookieService } from 'ngx-cookie-service';
 // HTTP CLIENT
@@ -8,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './interceptors';
 @NgModule({
   declarations: [],
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, MatSnackBarModule],
   // Çerez Servisi
   providers: [CookieService, httpInterceptorProviders],
 })

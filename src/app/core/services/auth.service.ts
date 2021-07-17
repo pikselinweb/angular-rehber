@@ -3,12 +3,15 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 // anahtarı çerezlere kaydetmek için
 import { CookieService } from 'ngx-cookie-service';
+// snackbar servisi
+import { SnackbarService } from './snackbar.service';
 // Api Servisi
 import { ApiService } from './api.service';
 // Auth Interfaces
 import { LOGIN_FORM, REGISTER_FORM, USER } from '@models/auth';
 // http req interface
 import { HTTP_REQ } from '@models/common';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,7 +19,8 @@ export class AuthService {
   constructor(
     private cookieService: CookieService,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private snackService: SnackbarService
   ) {}
   // asenkron kayıt fonksiyonu
   async register(formData: REGISTER_FORM) {
@@ -26,7 +30,9 @@ export class AuthService {
     if (success && data?.accessToken) {
       this.setCookiesAndNavigate(data?.accessToken, formData?.email);
     } else {
-      console.log(error?.message || 'Kayıt olurken bir sorun oluştu.');
+      this.snackService.snackMessage({
+        message: error?.message || 'Kayıt olurken bir sorun oluştu.',
+      });
     }
   }
   // asenkron giriş fonksiyonu
@@ -36,7 +42,9 @@ export class AuthService {
     if (success && data?.accessToken) {
       this.setCookiesAndNavigate(data?.accessToken, formData?.email);
     } else {
-      console.log(error?.message || 'Giriş yaparken bir sorun oluştu.');
+      this.snackService.snackMessage({
+        message: error?.message || 'Giriş yaparken bir sorun oluştu.',
+      });
     }
   }
   // email parametresi ile kullanıcı bilgilerini almak
@@ -49,7 +57,9 @@ export class AuthService {
       delete userInfo.password;
       return userInfo;
     } else {
-      console.log(error?.message || 'Kullanıcı bilgileri alınamadı.');
+      this.snackService.snackMessage({
+        message: error?.message || 'Kullanıcı bilgileri alınamadı.',
+      });
       return null;
     }
   }
@@ -63,6 +73,7 @@ export class AuthService {
     this.cookieService.set('userMail', email, { path: '/', expires });
     this.router.navigate(['']);
   }
+
   private get expireTime1Hour() {
     const dNow = new Date();
     let dTime = dNow.getTime();

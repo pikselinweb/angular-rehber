@@ -1,0 +1,12 @@
+.loading-spinner-wrapper{
+  background-color: rgba($color:#fff, $alpha:0.9);
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 4px;
+  .loading-status-text{
+    padding-top: 20px;
+    font-style: italic;
+  }
+}

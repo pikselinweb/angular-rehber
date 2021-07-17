@@ -13,3 +13,7 @@ $angular-rehber-theme: mat.define-light-theme(
   )
 );
 @include mat.all-component-themes($angular-rehber-theme);
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing.dark-backdrop {
+  background-color: rgba($color: #000, $alpha: 0.5);
+}

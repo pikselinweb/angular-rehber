@@ -7,7 +7,7 @@ import { AuthService } from '@core/services';
   styleUrls: ['./pages.component.scss'],
 })
 export class PagesComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, ) {}
 
   ngOnInit(): void {
     this.authService

@@ -63,6 +63,11 @@ export class AuthService {
       return null;
     }
   }
+  // Sistemden çıkış
+  logOut(){
+    this.cookieService.deleteAll();
+    this.router.navigate(['/auth'])
+  }
   private setCookiesAndNavigate(oAuthToken: string, email: string) {
     // Token süresi 1 saat olduğundan dolayı
     const expires = this.expireTime1Hour;

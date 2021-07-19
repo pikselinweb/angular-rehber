@@ -1,6 +1,6 @@
 @use '~@angular/material' as mat;
 @include mat.core();
-$angular-rehber-primary: mat.define-palette(mat.$cyan-palette);
+$angular-rehber-primary: mat.define-palette(mat.$deep-purple-palette,400);
 $angular-rehber-accent: mat.define-palette(mat.$amber-palette, 500);
 $angular-rehber-warn: mat.define-palette(mat.$red-palette, A200);
 $angular-rehber-theme: mat.define-light-theme(

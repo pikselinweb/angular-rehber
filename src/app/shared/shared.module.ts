@@ -8,20 +8,23 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
 @NgModule({
   declarations: [],
   imports: [CommonModule],
   exports: [
-     // FORM MODÜLLERİ
-     FormsModule,
-     ReactiveFormsModule,
+    // FORM MODÜLLERİ
+    FormsModule,
+    ReactiveFormsModule,
     // MATERIAL MODULLER
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatMenuModule,
+    MatToolbarModule,
   ],
 })
 export class SharedModule {}

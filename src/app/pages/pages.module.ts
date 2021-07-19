@@ -6,9 +6,10 @@ import { SharedModule } from '../shared/shared.module';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
+import { NavbarContent } from './contents';
 
 @NgModule({
-  declarations: [PagesComponent],
+  declarations: [PagesComponent, NavbarContent],
   imports: [
     CommonModule,
     PagesRoutingModule,

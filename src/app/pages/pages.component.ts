@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@core/services';
+import { USER } from '@models/auth';
 
 @Component({
   selector: 'app-pages',
@@ -7,11 +8,16 @@ import { AuthService } from '@core/services';
   styleUrls: ['./pages.component.scss'],
 })
 export class PagesComponent implements OnInit {
-  constructor(private authService: AuthService, ) {}
+  currentUser!:USER | null;
+  constructor(private authService: AuthService, ) {
 
-  ngOnInit(): void {
-    this.authService
-      .userProfile()
-      .then((val) => console.table(val));
+  }
+
+  async ngOnInit() {
+    this.currentUser = await this.authService.userProfile()
+
+  }
+  logOut(){
+    this.authService.logOut()
   }
 }

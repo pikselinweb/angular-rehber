@@ -51,7 +51,6 @@ export class ApiService {
       for (const key in params) {
         if (Object.prototype.hasOwnProperty.call(params, key)) {
           const paramValue = params[key];
-          console.log(paramValue);
           httpParams = httpParams.append(key, paramValue);
         }
       }

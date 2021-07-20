@@ -1,1 +1,9 @@
 <navbar [user]="currentUser" (logOut)="logOut()" ></navbar>
+<contact-card [userInfo]="currentUser">
+  <ng-container *ngIf="userContactList|async as cList; else contactErrorTemplate">
+    <contact-list [contactList]="cList"></contact-list>
+  </ng-container>
+  <ng-template #contactErrorTemplate>
+    <p>Rehber bilgilerini alırken bir sorun oluştu lütfen tekrar deneyiniz.</p>
+  </ng-template>
+</contact-card>

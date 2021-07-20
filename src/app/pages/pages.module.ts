@@ -7,10 +7,17 @@ import { SharedModule } from '../shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { NavbarContent } from './contents';
+import { ContactCardComponent, ContactListComponent } from './components';
 import { TruncatePipe } from './pipes';
 
 @NgModule({
-  declarations: [PagesComponent, NavbarContent, TruncatePipe],
+  declarations: [
+    PagesComponent,
+    NavbarContent,
+    ContactCardComponent,
+    ContactListComponent,
+    TruncatePipe,
+  ],
   imports: [
     CommonModule,
     PagesRoutingModule,

@@ -14,5 +14,40 @@
       "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent bibendum ultricies porttitor. Nullam tempus, sapien ac porttitor dignissim, justo arcu tincidunt ex, a bibendum quam nisi sed metus. ",
       "id": 2
     }
+  ],
+  "contacts":[
+    {
+      "id":1,
+      "userId":1,
+      "fullName":"Kemalettin Kamu",
+      "photoUrl":"https://avatars.dicebear.com/api/bottts/Kemalettin%20Kamu.svg",
+      "phoneNumber":"05332442424",
+      "address":[
+        {"title":"Ev","value":"FEVZİ ÇAKMAK-2 S 37/20, Kızılay"},
+        {"title":"İş","value":"Şemsi Paşa Pasajı Merkez 03104"}
+      ]
+    },
+    {
+      "id":2,
+      "userId":1,
+      "fullName":"Fahrettin Kılıç",
+      "photoUrl":"https://avatars.dicebear.com/api/bottts/Fahrettin%20K%C4%B1l%C4%B1%C3%A7.svg",
+      "phoneNumber":"05421233212",
+      "address":[
+        {"title":"Ev","value":"Caferağa mah. Moda cad. No:15, 34710"},
+        {"title":"İş","value":"KUC.DALYAN YOLU ÜZERİ HAYVAN PAZARI YANI"}
+      ]
+    },
+    {
+      "id":3,
+      "userId":1,
+      "fullName":"Ayşe Toplar",
+      "photoUrl":"https://avatars.dicebear.com/api/bottts/Ay%C5%9Fe%20Toplar.svg",
+      "phoneNumber":"05312445544",
+      "address":[
+        {"title":"Ev","value":"IRLAMAZ ÇAYI MEVKİİ MANİSA MANİSA"},
+        {"title":"İş","value":"YENİ YALOVA YOLU 4.KM BUTTİM TİCARET MERKEZİ A-2 BLOK NO:334, 16250, Demirtaş"}
+      ]
+    }
   ]
 }

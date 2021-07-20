@@ -1,17 +1,22 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row class="toolbar-row">
     <div class="logo-wrapper">
-     <mat-icon color="accent"  class="logo-icon">contact_phone</mat-icon>
+      <mat-icon color="accent" class="logo-icon">contact_phone</mat-icon>
       <span>Angular Rehber</span>
     </div>
     <div class="menu-wrapper">
-      <button color="accent" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menü">
+      <button
+        color="accent"
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Menü"
+      >
         <mat-icon>menu</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item disabled>
           <mat-icon>person</mat-icon>
-          <span>{{user?.fullName }}</span>
+          <span>{{ user?.fullName  | truncate: {limit:20} }}</span>
         </button>
         <button mat-menu-item (click)="logOut.emit()">
           <mat-icon color="warn">logout</mat-icon>

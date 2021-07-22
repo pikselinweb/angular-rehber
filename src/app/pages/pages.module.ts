@@ -7,11 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { NavbarContent } from './contents';
-import {
-  ContactCardComponent,
-  ContactListComponent,
-  ContactListItemComponent,
-} from './components';
+import { ContactCardComponent, ContactListItemComponent } from './components';
 import { TruncatePipe } from './pipes';
 
 @NgModule({
@@ -19,7 +15,7 @@ import { TruncatePipe } from './pipes';
     PagesComponent,
     NavbarContent,
     ContactCardComponent,
-    ContactListComponent,
+
     ContactListItemComponent,
     TruncatePipe,
   ],

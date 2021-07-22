@@ -1,0 +1,41 @@
+<div class="contact-list-item">
+  <!-- Profil Fotoğrafı -->
+  <div class="avatar">
+    <img [src]="contactItem?.photoUrl" />
+  </div>
+   <!-- Profil Fotoğrafı -->
+
+   <!-- Rehber bilgileri -->
+  <div class="contact-info">
+    <div class="full-name flex-middle">
+      <mat-icon class="item-icon">person</mat-icon><b>{{ contactItem?.fullName }}</b>
+    </div>
+    <div class="phone-number flex-middle">
+      <mat-icon class="item-icon">phone</mat-icon><span>{{
+        contactItem?.phoneNumber
+      }}</span>
+    </div>
+    <!-- Adres Bilgileri
+    Eğer adres mevcut ise aktifleşecek -->
+    <div
+      class="address-wrapper flex-middle"
+      *ngIf="contactItem?.address && contactItem.address.length > 0"
+    >
+      <mat-icon class="item-icon">map</mat-icon>
+      <div>
+        <div class="address-line" *ngFor="let address of contactItem.address">
+          <div class="address-title">{{ address?.title }}</div>
+          <div class="address-content">{{ address?.value }}</div>
+        </div>
+      </div>
+    </div>
+    <!-- Adres Bilgileri -->
+  </div>
+  <!-- Rehber Bilgileri -->
+
+  <!-- Menü -->
+  <div class="address-menu">
+    <button mat-icon-button><mat-icon>more_vertz</mat-icon></button>
+  </div>
+  <!-- Menü -->
+</div>

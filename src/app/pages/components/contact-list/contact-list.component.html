@@ -1,3 +1,2 @@
-<div *ngFor="let contact of contactList">
-  {{contact?.fullName}}
-</div>
+
+<contact-list-item *ngFor="let contact of contactList" [contactItem]="contact"></contact-list-item>

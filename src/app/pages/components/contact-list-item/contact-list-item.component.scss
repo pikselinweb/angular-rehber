@@ -1,0 +1,40 @@
+.contact-list-item{
+  display: flex;
+  align-items: center;
+  margin: 10px 0px;
+  padding: 15px 0px;
+  border-bottom: 1px solid rgba($color: #000000, $alpha:.1);
+  .avatar{
+    width: 70px;
+    background-color: #ededed;
+    border-radius: 50%;
+    padding: 10px;
+    border:1px solid rgba($color: #000000, $alpha:.05);
+  }
+  .contact-info{
+    flex:  1 1 auto;
+    padding: 0px 10px;
+    .full-name{
+      color:#333;
+      margin-bottom: 5px;
+    }
+    .address-wrapper{
+      margin-top: 8px;
+      .address-line{
+        margin-bottom: 5px;
+        .address-title{
+          font-size: 0.9em;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .item-icon{
+    margin-right: 10px;
+    color:rgba($color: #000000, $alpha: 0.4);
+  }
+}
+.flex-middle{
+  display: flex;
+  align-items:center;
+}

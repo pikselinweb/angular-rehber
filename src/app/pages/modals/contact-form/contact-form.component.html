@@ -1,0 +1,67 @@
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="contactForm">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Ad Soyad</mat-label>
+      <input formControlName="fullName" matInput placeholder="Ad Soyad" />
+      <mat-error *ngIf="fieldHasError('fullName')">
+        {{ getErrorMessage({fieldName:"fullName"}) }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Telefon Numarası</mat-label>
+      <input
+        formControlName="phoneNumber"
+        matInput
+        placeholder="Telefon Numarası"
+      />
+      <mat-error *ngIf="fieldHasError('phoneNumber')">
+        {{ getErrorMessage({fieldName:"phoneNumber"}) }}
+      </mat-error>
+    </mat-form-field>
+    <div class="address-wrapper mat-elevation-z1">
+      <ng-container formArrayName="address">
+        <ng-container
+          *ngFor="let addressForm of addressFields.controls; let i = index"
+        >
+          <div class="lesson-form-row" [formGroupName]="i">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Adres Başlığı</mat-label>
+              <input
+                formControlName="title"
+                matInput
+                placeholder="Adres Başlığı"
+                type="text"
+                id="address-title-{{ i }}"
+              />
+              <mat-error *ngIf="formArrayFieldHasError({fieldName:'title',arrayField:{fieldIndex:i,formArrayName:'address'}})">
+                {{ getErrorMessage({fieldName:'title',arrayField:{fieldIndex:i,formArrayName:'address'} }) }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Adres Bilgisi</mat-label>
+              <textarea
+                formControlName="value"
+                matInput
+                placeholder="Adres Bilgisi"
+                id="{{ 'address-value-' + i }}"
+              ></textarea>
+              <mat-error *ngIf="formArrayFieldHasError({fieldName:'value',arrayField:{fieldIndex:i,formArrayName:'address'}})">
+                {{ getErrorMessage({fieldName:'value',arrayField:{fieldIndex:i,formArrayName:'address'} }) }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div class="add-line">
+        <button type="button" mat-button (click)="addAdressField()">
+          <mat-icon>add</mat-icon>
+          <span>Adres Ekle</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>

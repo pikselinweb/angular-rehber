@@ -2,7 +2,7 @@
   <mat-card-header class="contact-card-header">
     <mat-card-title>{{ userInfo?.fullName }}</mat-card-title>
     <mat-card-subtitle>{{ userInfo?.email }}</mat-card-subtitle>
-    <button mat-card-avatar mat-mini-fab color="primary">
+    <button mat-card-avatar mat-mini-fab color="primary" aria-label="Ekle" (click)="addNewContact.emit()">
       <mat-icon>add</mat-icon>
     </button>
   </mat-card-header>

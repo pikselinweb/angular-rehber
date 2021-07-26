@@ -1,5 +1,5 @@
 <navbar [user]="currentUser" (logOut)="logOut()" ></navbar>
-<contact-card [userInfo]="currentUser">
+<contact-card [userInfo]="currentUser" (addNewContact)="openContactFormDialog()">
   <ng-container *ngIf="userContactList|async as cList; else contactErrorTemplate">
   <contact-list-item *ngFor="let contact of cList" [contactItem]="contact"></contact-list-item>
   </ng-container>

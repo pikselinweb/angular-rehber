@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 // Kullanıcı interface
 import { USER } from '@models/auth';
 
@@ -10,4 +10,6 @@ import { USER } from '@models/auth';
 export class ContactCardComponent {
   // Kullanıcı bilgisi
   @Input() userInfo!: USER | null;
+  // yeni rehber bilgisi ekleme
+  @Output() addNewContact = new EventEmitter();
 }

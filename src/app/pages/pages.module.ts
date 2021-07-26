@@ -8,6 +8,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { NavbarContent } from './contents';
 import { ContactCardComponent, ContactListItemComponent } from './components';
+import { ContactFormModal } from './modals';
 import { TruncatePipe } from './pipes';
 
 @NgModule({
@@ -15,10 +16,11 @@ import { TruncatePipe } from './pipes';
     PagesComponent,
     NavbarContent,
     ContactCardComponent,
-
     ContactListItemComponent,
+    ContactFormModal,
     TruncatePipe,
   ],
+
   imports: [
     CommonModule,
     PagesRoutingModule,

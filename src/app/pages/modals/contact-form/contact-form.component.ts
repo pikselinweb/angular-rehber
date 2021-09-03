@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormBuilder,
-  FormArray,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 interface FORM_FIELD {
   fieldName: string;
   arrayField?: FORM_ARRAY_FIELD;
@@ -26,6 +20,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+  // ADRES FORMUNU YÜKLEMEK İÇİN
   private initContactForm() {
     return this.fb.group({
       fullName: [
@@ -50,9 +45,15 @@ export class ContactFormComponent implements OnInit {
       ),
     });
   }
+  // Form bilgilerini konsola yazdırmak
+  submitContactForm() {
+    console.log(this.contactForm.value);
+  }
+  // ADRES ALANLARINI FORM DİZİSİ OLARAK ÇEKMEK İÇİN
   get addressFields() {
     return this.contactForm.get('address') as FormArray;
   }
+  // BAŞLIK VE İÇERİKTEN ADRES ALANI OLUŞTURMAK İÇİN
   createAdressField() {
     return this.fb.group({
       title: [
@@ -73,21 +74,23 @@ export class ContactFormComponent implements OnInit {
       ],
     });
   }
+  // DİNAMİK ADRES ALANLARI EKLEMEK İÇİN
   addAdressField() {
     this.addressFields.push(this.createAdressField());
-    console.log(
-      this.contactForm,
-      this.formArrayField({
-        fieldName: 'title',
-        arrayField: { fieldIndex: 0, formArrayName: 'address' },
-      })
-    );
+    // console.log(
+    //   this.contactForm,
+    //   this.formArrayField({
+    //     fieldName: 'title',
+    //     arrayField: { fieldIndex: 0, formArrayName: 'address' },
+    //   })
+    // );
   }
   // FORM ALANININ HATALI OLUP OLMADIĞINI KONTROL ETMEK İÇİN
   fieldHasError(fieldName: string): boolean {
     const formField = this.contactForm.controls[fieldName];
     return formField?.invalid && formField?.touched ? true : false;
   }
+  // FORM DİZİSİNDEN ELEMAN ÇEKMEK İÇİN
   formArrayField(fieldData: FORM_FIELD) {
     if (fieldData?.arrayField) {
       const fArray = this.contactForm.get(
@@ -101,6 +104,7 @@ export class ContactFormComponent implements OnInit {
       return null;
     }
   }
+  // FORM DİZİSİNDE HATA VARSA
   formArrayFieldHasError(fieldData: FORM_FIELD): boolean {
     const formField = this.formArrayField(fieldData);
     return formField?.invalid && formField?.touched ? true : false;
@@ -108,22 +112,18 @@ export class ContactFormComponent implements OnInit {
 
   // FORM ALANINDAKİ HATAYI YAKALAMAK İÇİN
   getErrorMessage(fieldData: FORM_FIELD): string {
-    const formField = fieldData?.arrayField?this.formArrayField(fieldData):this.contactForm.get(fieldData.fieldName);
+    const formField = fieldData?.arrayField
+      ? this.formArrayField(fieldData)
+      : this.contactForm.get(fieldData.fieldName);
     const fieldErrors = formField?.errors;
     return formField?.hasError('required')
       ? 'Alan boş bırakılamaz'
-      : formField?.hasError('email')
-      ? 'Lütfen geçerli bir mail adresi giriniz.'
       : formField?.hasError('minlength')
       ? `Belirlenen karakter sınırının altındasınız
       (${fieldErrors?.minlength?.actualLength} / ${fieldErrors?.minlength?.requiredLength})`
       : formField?.hasError('maxlength')
       ? `Belirlenen karakter sınırının üstündesiniz
       (${fieldErrors?.maxlength?.actualLength} / ${fieldErrors?.maxlength?.requiredLength})`
-      : formField?.hasError('pattern')
-      ? 'Şifre alanı en az bir büyük harf, bir küçük harf ve #?!@$%^&*- özel karakterlerinden birini içermelidir.'
-      : formField?.hasError('mismatch')
-      ? 'Girdiğiniz şifreler eşleşmemektedir.'
       : 'Bilinmeyen hata';
   }
 }

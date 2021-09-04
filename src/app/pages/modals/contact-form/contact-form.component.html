@@ -13,6 +13,7 @@
         formControlName="phoneNumber"
         matInput
         placeholder="Telefon Numarası"
+        prefix="0 " mask="(000) 000 00 00"
       />
       <mat-error *ngIf="fieldHasError('phoneNumber')">
         {{ getErrorMessage({ fieldName: "phoneNumber" }) }}

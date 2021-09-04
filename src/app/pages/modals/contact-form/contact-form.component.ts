@@ -53,6 +53,15 @@ export class ContactFormComponent implements OnInit {
   get addressFields() {
     return this.contactForm.get('address') as FormArray;
   }
+  // FORM DİZİSİNİ SINIRLAMA
+  get allowAddAddressField() {
+    return this.addressFields?.length < 5 ? true : false;
+  }
+  // FORM ELEMANI SİLME ONAYI
+  get allowDeleteAddressField() {
+    return this.addressFields?.length > 1 ? true : false;
+  }
+
   // BAŞLIK VE İÇERİKTEN ADRES ALANI OLUŞTURMAK İÇİN
   createAdressField() {
     return this.fb.group({
@@ -84,6 +93,10 @@ export class ContactFormComponent implements OnInit {
     //     arrayField: { fieldIndex: 0, formArrayName: 'address' },
     //   })
     // );
+  }
+  // ADDRESS FORM DİZİSİNDEN ELEMAN SİLMEK İÇİN
+  removeAddressField(fieldIndex:number){
+    this.addressFields.removeAt(fieldIndex)
   }
   // FORM ALANININ HATALI OLUP OLMADIĞINI KONTROL ETMEK İÇİN
   fieldHasError(fieldName: string): boolean {

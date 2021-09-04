@@ -13,7 +13,8 @@
         formControlName="phoneNumber"
         matInput
         placeholder="Telefon Numarası"
-        prefix="0 " mask="(000) 000 00 00"
+        prefix="0 "
+        mask="(000) 000 00 00"
       />
       <mat-error *ngIf="fieldHasError('phoneNumber')">
         {{ getErrorMessage({ fieldName: "phoneNumber" }) }}
@@ -24,7 +25,7 @@
         <ng-container
           *ngFor="let addressForm of addressFields.controls; let i = index"
         >
-          <div class="lesson-form-row" [formGroupName]="i">
+          <div class="address-form-row" [formGroupName]="i">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Adres Başlığı</mat-label>
               <input
@@ -74,10 +75,19 @@
                 }}
               </mat-error>
             </mat-form-field>
+            <div class="address-remove-button" *ngIf="allowDeleteAddressField">
+              <button
+                mat-raised-button
+                color="warn"
+                (click)="removeAddressField(i)"
+              >
+                Adresi Sil
+              </button>
+            </div>
           </div>
         </ng-container>
       </ng-container>
-      <div class="add-line">
+      <div class="add-line" *ngIf="allowAddAddressField">
         <button type="button" mat-button (click)="addAdressField()">
           <mat-icon>add</mat-icon>
           <span>Adres Ekle</span>

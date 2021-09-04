@@ -1,8 +1,36 @@
-.contact-form{
+.contact-form {
   padding: 10px 0;
 }
-.address-wrapper{
-  padding: 5px 10px;
+.address-wrapper {
+  padding: 15px 10px;
   background-color: #fafafa;
   border-radius: 4px;
+  overflow: hidden;
+}
+.address-form-row {
+  padding: 15px 10px 15px 10px;
+  transition: all ease 0.4s;
+  .address-remove-button {
+    text-align: center;
+    max-height: 0;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
+    .mat-raised-button {
+      line-height: 1.6em;
+    }
+  }
+  &:hover {
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+      0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+      0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+    border-radius: 4px;
+    .address-remove-button {
+      max-height: 100px;
+      transition: max-height 0.4s ease-in;
+    }
+  }
+}
+.add-line {
+  margin-top: 10px;
 }

@@ -1,5 +1,5 @@
 export interface CONTACT {
-  id: number;
+  id?: number;
   userId: number;
   fullName: string;
   phoneNumber: string;

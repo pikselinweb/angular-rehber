@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ContactService } from '@core/services';
+import { CONTACT } from '@models/contacts';
 interface FORM_FIELD {
   fieldName: string;
   arrayField?: FORM_ARRAY_FIELD;
@@ -15,7 +18,15 @@ interface FORM_ARRAY_FIELD {
 })
 export class ContactFormComponent implements OnInit {
   contactForm: FormGroup;
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    // modala gelen data
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    // rehber servisi
+    private contactService: ContactService,
+    // modal kontrolü
+    private dialogRef: MatDialogRef<ContactFormComponent>
+  ) {
     this.contactForm = this.initContactForm();
   }
 
@@ -45,9 +56,20 @@ export class ContactFormComponent implements OnInit {
       ),
     });
   }
-  // Form bilgilerini konsola yazdırmak
-  submitContactForm() {
-    console.log(this.contactForm.value);
+  // Form bilgilerini kaydetmek
+  async submitContactForm() {
+    const { fullName, phoneNumber, address } = this.contactForm.value;
+    const cFormData: CONTACT = {
+      fullName,
+      phoneNumber,
+      address,
+      userId: this.data?.userId,
+      photoUrl: this.generatePUrl(fullName),
+    };
+    const result = await this.contactService.addContact(cFormData);
+    if (result?.id) {
+      this.dialogRef.close(result);
+    }
   }
   // ADRES ALANLARINI FORM DİZİSİ OLARAK ÇEKMEK İÇİN
   get addressFields() {
@@ -95,8 +117,8 @@ export class ContactFormComponent implements OnInit {
     // );
   }
   // ADDRESS FORM DİZİSİNDEN ELEMAN SİLMEK İÇİN
-  removeAddressField(fieldIndex:number){
-    this.addressFields.removeAt(fieldIndex)
+  removeAddressField(fieldIndex: number) {
+    this.addressFields.removeAt(fieldIndex);
   }
   // FORM ALANININ HATALI OLUP OLMADIĞINI KONTROL ETMEK İÇİN
   fieldHasError(fieldName: string): boolean {
@@ -138,5 +160,21 @@ export class ContactFormComponent implements OnInit {
       ? `Belirlenen karakter sınırının üstündesiniz
       (${fieldErrors?.maxlength?.actualLength} / ${fieldErrors?.maxlength?.requiredLength})`
       : 'Bilinmeyen hata';
+  }
+  // profil resmi oluşturmak
+  private generatePUrl(name: string) {
+    const strName = this.slugifyString(name);
+    return `https://avatars.dicebear.com/api/bottts/${strName}.svg`;
+  }
+  // string verisini temizlemek
+  private slugifyString(strVal: string) {
+    return strVal
+      .toString() // Cast to string
+      .toLowerCase() // Convert the string to lowercase letters
+      .normalize('NFD') // The normalize() method returns the Unicode Normalization Form of a given string.
+      .trim() // Remove whitespace from both sides of a string
+      .replace(/\s+/g, '-') // Replace spaces with -
+      .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+      .replace(/\-\-+/g, '-'); // Replace multiple - with single -
   }
 }

@@ -30,4 +30,19 @@ export class ContactService {
       return [];
     }
   }
+
+  // yeni rehber ekleme
+  async addContact(contactData: CONTACT):Promise<CONTACT |null> {
+    const httpData: HTTP_REQ = { url: 'contacts', body: contactData };
+    const { success, error, data } = await this.apiService.post(httpData);
+    if (success) {
+      return data;
+    } else {
+      this.snackService.snackMessage({
+        message:
+          error?.message || 'Rehber bilgisi eklenirken bir sorun oluştu',
+      });
+      return null;
+    }
+  }
 }

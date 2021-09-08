@@ -101,8 +101,8 @@
   <button
     mat-raised-button
     (click)="submitContactForm()"
-    cdkFocusInitial
     color="primary"
+    [disabled]="contactForm.invalid"
   >
     Kaydet
   </button>

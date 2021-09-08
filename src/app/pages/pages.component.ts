@@ -31,11 +31,19 @@ export class PagesComponent implements OnInit {
   }
   // Rehber Ekleme  - Düzenleme Formu
   openContactFormDialog(contact?: CONTACT) {
-    this.dialog.open(ContactFormModal, {
-      width: '95%',
-      maxWidth: '600px',
-      data: contact,
-    });
+    this.dialog
+      .open(ContactFormModal, {
+        width: '95%',
+        maxWidth: '600px',
+        data: { contact, userId: this.currentUser?.id },
+      })
+      .afterClosed()
+      .subscribe(async (dialogResult: CONTACT) => {
+        if (dialogResult?.id) {
+          const tempCList = await this.userContactList;
+          tempCList.push(dialogResult);
+        }
+      });
   }
   logOut() {
     this.authService.logOut();

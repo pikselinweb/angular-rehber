@@ -43,6 +43,22 @@ export class ApiService {
       return { success: false, data: null, error };
     }
   }
+   // put istekleri
+   public async put(httpData: HTTP_REQ) {
+    try {
+      const httpOptions = this.generateHttpOptions(
+        httpData.params,
+        httpData.headers
+      );
+      const result: any = await this.http
+        .put(`${this.apiUrl}/${httpData.url}`, httpData.body, httpOptions)
+        .pipe(shareReplay())
+        .toPromise();
+      return { success: true, data: result, error: null };
+    } catch (error) {
+      return { success: false, data: null, error };
+    }
+  }
   // üst bilgi oluşturma
   private generateHttpOptions(params: any, headers: any) {
     const httpOptions: any = {};

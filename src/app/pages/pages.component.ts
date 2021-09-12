@@ -41,7 +41,19 @@ export class PagesComponent implements OnInit {
       .subscribe(async (dialogResult: CONTACT) => {
         if (dialogResult?.id) {
           const tempCList = await this.userContactList;
-          tempCList.push(dialogResult);
+
+          if (contact) {
+            // eğer rehber bilgisi gönderilmişse güncelle
+            const itemIndex = tempCList.findIndex(
+              (itm) => itm?.id === dialogResult?.id
+            );
+            if (itemIndex >= 0) {
+              tempCList[itemIndex] = dialogResult;
+            }
+          } else {
+            // değilse diziye ekle
+            tempCList.push(dialogResult);
+          }
         }
       });
   }

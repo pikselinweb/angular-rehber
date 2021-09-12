@@ -45,4 +45,19 @@ export class ContactService {
       return null;
     }
   }
+
+    // rehberi güncelleme
+    async updateContact(contactData: CONTACT):Promise<CONTACT |null> {
+      const httpData: HTTP_REQ = { url: `api/contacts/put/${contactData.id}`, body: contactData };
+      const { success, error, data } = await this.apiService.put(httpData);
+      if (success) {
+        return data;
+      } else {
+        this.snackService.snackMessage({
+          message:
+            error?.message || 'Rehber bilgisi güncellenirken bir sorun oluştu',
+        });
+        return null;
+      }
+    }
 }

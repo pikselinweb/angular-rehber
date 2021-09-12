@@ -82,11 +82,15 @@
     },
     {
       "fullName": "Fatih Kalaycı",
-      "phoneNumber": "5355664123",
+      "phoneNumber": "5355664125",
       "address": [
         {
           "title": "İş",
           "value": "IBRAHIM AGA MAH.DR.EYÜP AKSOY 45/1 KADIKÖY"
+        },
+        {
+          "title": "Ev",
+          "value": "Kirazlı Mah. Merkez Cad. No:71/B 34210 Bagcilar"
         }
       ],
       "userId": 1,

@@ -1,7 +1,16 @@
-<navbar [user]="currentUser" (logOut)="logOut()" ></navbar>
-<contact-card [userInfo]="currentUser" (addNewContact)="openContactFormDialog()">
-  <ng-container *ngIf="userContactList|async as cList; else contactErrorTemplate">
-  <contact-list-item *ngFor="let contact of cList" [contactItem]="contact"></contact-list-item>
+<navbar [user]="currentUser" (logOut)="logOut()"></navbar>
+<contact-card
+  [userInfo]="currentUser"
+  (addNewContact)="openContactFormDialog()"
+>
+  <ng-container
+    *ngIf="userContactList | async as cList; else contactErrorTemplate"
+  >
+    <contact-list-item
+      *ngFor="let contact of cList"
+      [contactItem]="contact"
+      (updateItem)="openContactFormDialog($event)"
+    ></contact-list-item>
   </ng-container>
   <ng-template #contactErrorTemplate>
     <p>Rehber bilgilerini alırken bir sorun oluştu lütfen tekrar deneyiniz.</p>

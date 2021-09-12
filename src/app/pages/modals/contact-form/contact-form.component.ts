@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ContactService } from '@core/services';
-import { CONTACT } from '@models/contacts';
+import { CONTACT, CONTACT_ADDRESS } from '@models/contacts';
 interface FORM_FIELD {
   fieldName: string;
   arrayField?: FORM_ARRAY_FIELD;
@@ -27,15 +27,20 @@ export class ContactFormComponent implements OnInit {
     // modal kontrolü
     private dialogRef: MatDialogRef<ContactFormComponent>
   ) {
-    this.contactForm = this.initContactForm();
+    // GELEN FORM DEĞERİ
+    const defaultFormData: CONTACT = this.data?.contact;
+    // REHBER FORMUNU OLUŞTURMAK VE SABİT ALANLARI DOLDURMAK
+    this.contactForm = this.initContactForm(defaultFormData);
+    // ADRES ALANLARINI OLUŞTURMAK - DOLDURMAK
+    this.initAddressFormArray(defaultFormData?.address);
   }
 
   ngOnInit(): void {}
   // ADRES FORMUNU YÜKLEMEK İÇİN
-  private initContactForm() {
+  private initContactForm(defaultFormData: CONTACT) {
     return this.fb.group({
       fullName: [
-        '',
+        defaultFormData?.fullName || '',
         Validators.compose([
           Validators.required,
           Validators.minLength(3),
@@ -43,18 +48,25 @@ export class ContactFormComponent implements OnInit {
         ]),
       ],
       phoneNumber: [
-        '',
+        defaultFormData?.phoneNumber || '',
         Validators.compose([
           Validators.required,
           Validators.minLength(10),
           Validators.maxLength(10),
         ]),
       ],
-      address: this.fb.array(
-        [this.createAdressField()],
-        Validators.compose([Validators.required])
-      ),
+      address: this.fb.array([], Validators.compose([Validators.required])),
     });
+  }
+  // ADRES DİZİNİS DİNAMİK OLUŞTURMAK İÇİN
+  private initAddressFormArray(addressArray: CONTACT_ADDRESS[]) {
+    if (addressArray?.length > 0) {
+      addressArray.forEach((fAddress) => {
+        this.addAdressField(fAddress);
+      });
+    } else {
+      this.addAdressField();
+    }
   }
   // Form bilgilerini kaydetmek
   async submitContactForm() {
@@ -66,7 +78,12 @@ export class ContactFormComponent implements OnInit {
       userId: this.data?.userId,
       photoUrl: this.generatePUrl(fullName),
     };
-    const result = await this.contactService.addContact(cFormData);
+    // rehber bilgisi id
+    const cId = this.data?.contact?.id
+    // güncelleme ya da oluşturma işlemi
+    const result = cId
+      ? await this.contactService.updateContact({...cFormData,id:cId})
+      : await this.contactService.addContact(cFormData);
     if (result?.id) {
       this.dialogRef.close(result);
     }
@@ -85,10 +102,10 @@ export class ContactFormComponent implements OnInit {
   }
 
   // BAŞLIK VE İÇERİKTEN ADRES ALANI OLUŞTURMAK İÇİN
-  createAdressField() {
+  createAdressField(contactAddress?: CONTACT_ADDRESS) {
     return this.fb.group({
       title: [
-        '',
+        contactAddress?.title || '',
         Validators.compose([
           Validators.required,
           Validators.minLength(2),
@@ -96,7 +113,7 @@ export class ContactFormComponent implements OnInit {
         ]),
       ],
       value: [
-        '',
+        contactAddress?.value || '',
         Validators.compose([
           Validators.required,
           Validators.minLength(6),
@@ -106,8 +123,8 @@ export class ContactFormComponent implements OnInit {
     });
   }
   // DİNAMİK ADRES ALANLARI EKLEMEK İÇİN
-  addAdressField() {
-    this.addressFields.push(this.createAdressField());
+  addAdressField(contactAddress?: CONTACT_ADDRESS) {
+    this.addressFields.push(this.createAdressField(contactAddress));
     // console.log(
     //   this.contactForm,
     //   this.formArrayField({

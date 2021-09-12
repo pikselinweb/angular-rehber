@@ -35,7 +35,20 @@
 
   <!-- Menü -->
   <div class="address-menu">
-    <button mat-icon-button><mat-icon>more_vertz</mat-icon></button>
+    <button mat-icon-button [matMenuTriggerFor]="rehberMenu" aria-label="Rehber Menü">
+      <mat-icon>more_vertz</mat-icon>
+    </button>
+    <mat-menu #rehberMenu="matMenu">
+      <button mat-menu-item (click)="updateContactItem(contactItem)">
+        <mat-icon>edit</mat-icon>
+        <span>Düzenle</span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon color="warn">delete</mat-icon>
+        <span>Sil</span>
+      </button>
+    </mat-menu>
   </div>
   <!-- Menü -->
 </div>

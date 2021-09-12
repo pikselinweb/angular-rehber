@@ -1,5 +1,6 @@
 {
   "users": 440,
   "/users/:email": "/posts?email=:email",
-  "/contacts/:userId": "/posts?userId=:userId"
+  "/contacts/:userId": "/posts?userId=:userId",
+  "/api/contacts/put/:id": "/contacts/:id"
 }

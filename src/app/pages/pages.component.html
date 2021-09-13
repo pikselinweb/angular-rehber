@@ -10,6 +10,7 @@
       *ngFor="let contact of cList"
       [contactItem]="contact"
       (updateItem)="openContactFormDialog($event)"
+      (deleteItem)="deleteContact($event)"
     ></contact-list-item>
   </ng-container>
   <ng-template #contactErrorTemplate>

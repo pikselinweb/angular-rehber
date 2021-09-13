@@ -8,9 +8,18 @@ import { CONTACT } from '@models/contacts';
 })
 export class ContactListItemComponent {
   @Input() contactItem!: CONTACT;
+  //güncelleme işlemi
   @Output() updateItem = new EventEmitter<CONTACT>();
+  //silme işlemi
+  @Output() deleteItem = new EventEmitter<CONTACT>();
 
+  // güncelleme fonksiyonu
   updateContactItem(cItem: CONTACT) {
     this.updateItem.emit(cItem);
+  }
+
+  // silme fonksiyonu
+  deleteContactItem(cItem: CONTACT) {
+    this.deleteItem.emit(cItem);
   }
 }

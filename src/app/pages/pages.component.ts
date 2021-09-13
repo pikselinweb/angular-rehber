@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService, ContactService } from '@core/services';
 import { USER } from '@models/auth';
 import { CONTACT } from '@models/contacts';
+
 // Modal bileşeni
 import { ContactFormModal } from './modals';
 
@@ -13,7 +15,7 @@ import { ContactFormModal } from './modals';
 })
 export class PagesComponent implements OnInit {
   currentUser!: USER | null;
-  userContactList!: Promise<CONTACT[]>;
+  userContactList = new BehaviorSubject<CONTACT[]>([]);
   constructor(
     private authService: AuthService,
     private contactService: ContactService,
@@ -24,9 +26,11 @@ export class PagesComponent implements OnInit {
     this.currentUser = await this.authService.userProfile();
     // kullanıcı id ile rehber bilgilerini almak
     if (this.currentUser?.id) {
-      this.userContactList = this.contactService.contactList(
+      const tempContactList = await this.contactService.contactList(
         this.currentUser.id
       );
+      // rehber listesine değer atama
+      this.userContactList.next(tempContactList);
     }
   }
   // Rehber Ekleme  - Düzenleme Formu
@@ -40,7 +44,8 @@ export class PagesComponent implements OnInit {
       .afterClosed()
       .subscribe(async (dialogResult: CONTACT) => {
         if (dialogResult?.id) {
-          const tempCList = await this.userContactList;
+          // userContactList'den şimdiki değeri alma
+          const tempCList =  this.userContactList.getValue();
 
           if (contact) {
             // eğer rehber bilgisi gönderilmişse güncelle
@@ -54,9 +59,23 @@ export class PagesComponent implements OnInit {
             // değilse diziye ekle
             tempCList.push(dialogResult);
           }
+          // değişikliklerle kullanıcı listesini güncellemek
+          this.userContactList.next(tempCList);
         }
       });
   }
+
+  async deleteContact(contact: CONTACT) {
+    const deleted = await this.contactService.deleteContact(contact);
+    if (deleted) {
+      const tempCOntactList = this.userContactList.getValue();
+      const deletedContactList = tempCOntactList.filter(
+        (itm) => itm.id !== contact.id
+      );
+      this.userContactList.next(deletedContactList);
+    }
+  }
+
   logOut() {
     this.authService.logOut();
   }

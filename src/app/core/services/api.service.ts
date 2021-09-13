@@ -43,8 +43,8 @@ export class ApiService {
       return { success: false, data: null, error };
     }
   }
-   // put istekleri
-   public async put(httpData: HTTP_REQ) {
+  // put istekleri
+  public async put(httpData: HTTP_REQ) {
     try {
       const httpOptions = this.generateHttpOptions(
         httpData.params,
@@ -52,6 +52,19 @@ export class ApiService {
       );
       const result: any = await this.http
         .put(`${this.apiUrl}/${httpData.url}`, httpData.body, httpOptions)
+        .pipe(shareReplay())
+        .toPromise();
+      return { success: true, data: result, error: null };
+    } catch (error) {
+      return { success: false, data: null, error };
+    }
+  }
+
+  // silme istekleri
+  public async delete(httpData: HTTP_REQ) {
+    try {
+      const result: any = await this.http
+        .delete(`${this.apiUrl}/${httpData.url}`, httpData.body)
         .pipe(shareReplay())
         .toPromise();
       return { success: true, data: result, error: null };

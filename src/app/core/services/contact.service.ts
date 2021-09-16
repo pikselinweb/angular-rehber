@@ -74,7 +74,7 @@ export class ContactService {
     } else {
       this.snackService.snackMessage({
         message:
-          error?.message || 'Rehber bilgisi güncellenirken bir sorun oluştu',
+          error?.message || 'Rehber bilgisi silinirken bir sorun oluştu',
       });
       return false;
     }

@@ -16,8 +16,9 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { NavbarContent } from './contents';
 import { ContactCardComponent, ContactListItemComponent } from './components';
-import { ContactFormModal } from './modals';
+import { AlertModal, ContactFormModal } from './modals';
 import { TruncatePipe } from './pipes';
+
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { TruncatePipe } from './pipes';
     ContactListItemComponent,
     ContactFormModal,
     TruncatePipe,
+    AlertModal,
   ],
 
   imports: [

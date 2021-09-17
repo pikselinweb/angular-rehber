@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // MASK MODÜLÜ
-import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 // MASK MODÜL AYARLARI
 const maskConfigFunction: () => Partial<IConfig> = () => {
   return {
@@ -16,9 +16,8 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { NavbarContent } from './contents';
 import { ContactCardComponent, ContactListItemComponent } from './components';
-import { AlertModal, ContactFormModal } from './modals';
+import { ContactFormModal } from './modals';
 import { TruncatePipe } from './pipes';
-
 
 @NgModule({
   declarations: [
@@ -28,7 +27,6 @@ import { TruncatePipe } from './pipes';
     ContactListItemComponent,
     ContactFormModal,
     TruncatePipe,
-    AlertModal,
   ],
 
   imports: [

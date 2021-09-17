@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
-import { AuthService, ContactService, SnackbarService } from '@core/services';
+import { AuthService, ContactService } from '@core/services';
 import { USER } from '@models/auth';
 import { CONTACT } from '@models/contacts';
 
@@ -20,7 +20,7 @@ export class PagesComponent implements OnInit {
     private authService: AuthService,
     private contactService: ContactService,
     private dialog: MatDialog,
-    private snackService: SnackbarService
+
   ) {}
 
   async ngOnInit() {
@@ -55,18 +55,12 @@ export class PagesComponent implements OnInit {
             );
             if (itemIndex >= 0) {
               tempCList[itemIndex] = dialogResult;
-              // güncelleme mesajı
-              this.snackService.snackMessage({
-                message: `${contact?.fullName} güncellendi.`,
-              });
+
             }
           } else {
             // değilse diziye ekle
             tempCList.push(dialogResult);
-            // ekleme mesajı
-            this.snackService.snackMessage({
-              message: `${dialogResult?.fullName} rehbere eklendi`,
-            });
+
           }
           // değişikliklerle kullanıcı listesini güncellemek
           this.userContactList.next(tempCList);
@@ -82,10 +76,7 @@ export class PagesComponent implements OnInit {
       const deletedContactList = tempCOntactList.filter(
         (itm) => itm.id !== contact.id
       );
-      //silme mesajı
-      this.snackService.snackMessage({
-        message: `${contact?.fullName} isimli kişi rehberden silinmiştir`,
-      });
+
       this.userContactList.next(deletedContactList);
     }
   }

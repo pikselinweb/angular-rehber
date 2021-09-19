@@ -12,9 +12,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
+// modal components
+import { AlertModal } from './modals';
+// shared services
+import {AlertService} from './services'
 @NgModule({
-  declarations: [],
-  imports: [CommonModule],
+  declarations: [AlertModal],
+  providers:[AlertService],
+  imports: [CommonModule, MatButtonModule, MatDialogModule],
   exports: [
     // FORM MODÜLLERİ
     FormsModule,

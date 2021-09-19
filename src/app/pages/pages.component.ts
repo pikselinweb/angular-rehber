@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService, ContactService, SnackbarService } from '@core/services';
+import { AlertService } from '@shared/services';
 import { USER } from '@models/auth';
 import { CONTACT } from '@models/contacts';
 
@@ -20,7 +21,8 @@ export class PagesComponent implements OnInit {
     private authService: AuthService,
     private contactService: ContactService,
     private dialog: MatDialog,
-    private snackService: SnackbarService
+    private snackService: SnackbarService,
+    private alertService: AlertService
   ) {}
 
   async ngOnInit() {
@@ -76,18 +78,29 @@ export class PagesComponent implements OnInit {
 
   // seçili rehber ögesini silme
   async deleteContact(contact: CONTACT) {
-    const deleted = await this.contactService.deleteContact(contact);
-    if (deleted) {
-      const tempCOntactList = this.userContactList.getValue();
-      const deletedContactList = tempCOntactList.filter(
-        (itm) => itm.id !== contact.id
-      );
-      //silme mesajı
-      this.snackService.snackMessage({
-        message: `${contact?.fullName} isimli kişi rehberden silinmiştir`,
-      });
-      this.userContactList.next(deletedContactList);
+    const {accepted} = await this.alertService.openAlert({
+      title: 'Silme Onayı',
+      body: `${contact?.fullName} isimli kişiyi rehberden silmek istediğinize emin misiniz?`,
+      cancelButtonText:"Vazgeç",
+      confirmButtonText:"Sil",
+      cancelButtonColor:"default",
+      confirmButtonColor:"warn"
+    });
+    if(accepted){
+      const deleted = await this.contactService.deleteContact(contact);
+      if (deleted) {
+        const tempCOntactList = this.userContactList.getValue();
+        const deletedContactList = tempCOntactList.filter(
+          (itm) => itm.id !== contact.id
+        );
+        //silme mesajı
+        this.snackService.snackMessage({
+          message: `${contact?.fullName} isimli kişi rehberden silinmiştir`,
+        });
+        this.userContactList.next(deletedContactList);
+      }
     }
+
   }
 
   logOut() {

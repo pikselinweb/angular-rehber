@@ -16,7 +16,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { NavbarContent } from './contents';
 import { ContactCardComponent, ContactListItemComponent } from './components';
-import { AlertModal, ContactFormModal } from './modals';
+import {  ContactFormModal } from './modals';
 import { TruncatePipe } from './pipes';
 
 
@@ -28,7 +28,7 @@ import { TruncatePipe } from './pipes';
     ContactListItemComponent,
     ContactFormModal,
     TruncatePipe,
-    AlertModal,
+
   ],
 
   imports: [

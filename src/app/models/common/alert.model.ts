@@ -8,3 +8,8 @@ export interface ALERTDATA {
   hideCancelButton?:boolean;
   data?:any;
 }
+
+export interface ALERTRESULT{
+  accepted:boolean;
+  data?:any;
+}

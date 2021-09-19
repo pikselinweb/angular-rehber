@@ -1,12 +1,15 @@
+<h2 mat-dialog-title class="alert-title">{{ alertData?.title }}</h2>
 <mat-dialog-content class="mat-typography">
-  {{ alertData?.body }}
+  <div class="alert-body">
+    {{ alertData?.body }}
+  </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="center">
   <ng-container *ngIf="!alertData?.hideCancelButton">
     <button
       mat-raised-button
-      mat-dialog-close
-      [color]="alertData?.confirmButtonColor || 'warn'"
+      (click)="cancel()"
+      [color]="alertData?.cancelButtonColor || 'warn'"
     >
       {{ alertData?.cancelButtonText || "Kapat" }}
     </button>
@@ -16,6 +19,6 @@
     (click)="confirm()"
     [color]="alertData?.confirmButtonColor || 'primary'"
   >
-    {{ alertData?.confirmButtonText }}
+    {{ alertData?.confirmButtonText || "Tamam" }}
   </button>
 </mat-dialog-actions>

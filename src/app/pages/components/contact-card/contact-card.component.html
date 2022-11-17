@@ -1,17 +1,25 @@
-<mat-card class="contact-card">
-  <mat-card-header class="contact-card-header">
-    <mat-card-title>{{ userInfo?.fullName }}</mat-card-title>
-    <mat-card-subtitle>{{ userInfo?.email }}</mat-card-subtitle>
-    <button mat-card-avatar mat-mini-fab color="primary" aria-label="Ekle" (click)="addNewContact.emit()">
-      <mat-icon>add</mat-icon>
-    </button>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="divider">
-      <mat-divider></mat-divider>
-    </div>
-    <!-- Cart bileşeninin içine başka bileşenler
+<div class="contact-card-wrapper">
+  <mat-card class="contact-card">
+    <mat-card-header class="contact-card-header">
+      <mat-card-title>{{ userInfo?.fullName }}</mat-card-title>
+      <mat-card-subtitle>{{ userInfo?.email }}</mat-card-subtitle>
+      <button
+        mat-card-avatar
+        mat-mini-fab
+        color="primary"
+        aria-label="Ekle"
+        (click)="addNewContact.emit()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="divider">
+        <mat-divider></mat-divider>
+      </div>
+      <!-- Cart bileşeninin içine başka bileşenler
     eklemek için -->
-    <ng-content></ng-content>
-  </mat-card-content>
-</mat-card>
+      <ng-content></ng-content>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,7 +1,7 @@
 .toolbar-row{
   justify-content: space-between;
   align-items: center;
-  width: 800px;
+  max-width: 800px;
   margin: 0 auto;
   .logo-wrapper{
     display: inline-flex;
